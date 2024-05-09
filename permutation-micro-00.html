@@ -1,0 +1,110 @@
+<title> The Permutation-based Page Interleaving has been Widely Used in
+Computers for Fast Memory Accesses</title>
+<body bgcolor="#ffffff">
+<center><h3> The Permutation-based Page Interleaving has been Widely Used in
+Computers for Fast Memory Accesses
+</h3> </center>
+<p>
+<ul>
+<b>Background</b><br>
+In computer architecture, the main memory is divided into a set of banks; each of which consists of multiple DRAM chips. The memory addresses are evenly across multiple DRAM banks, which is also called <a href="https://en.wikipedia.org/wiki/Interleaved_memory"> interleaved memory</a>. If there are
+<i>m</i> banks in an interleaved memory, memory location <i>i</i> will
+be mapped to bank number: <i>i</i> mod <i>m</i>.
+Data in the DRAM is stored in a unit of page. Each DRAM bank has a row buffer that serves as a cache for accessing any page in the bank. Before a page in the DRAM bank is read, it is first loaded into the row buffer. If the page is immediately read from the row buffer (or a row buffer hit), it has the shortest memory access latency in one memory cycle. If it is a row buffer miss, which is also called a row buffer conflict because the new page has to be loaded into the row buffer before it is read. Row buffer misses happen as access requests on different memory pages in the same bank are serviced.  A row buffer conflict incurs a substantial delay for a memory access. In contrast, memory accesses to different banks can proceed in parallel with a high throughput.
+<p>
+
+<b>The Findings</b><br>
+Under the conventional interleaved memory mapping, DRAM row buffer conflicts come from the following three sources.  (1) Conflict misses in the last level on-chip cache lead to DRAM row buffer misses. (2) Write back conflicts in the last level on-chip cache also lead to DRAM row buffer conflicts. (3) Certain sequential memory access patterns that make the distance of memory locations between consecutive data elements being accessed be a multiple of the accumulative size of all row buffers of the memory banks, will cause row buffer conflicts.
+<p>
+<b>The Permutation based Solution for Interleaved Memory</b><br>
+The two architecture related sources of DRAM row buffer conflicts indicate that the address mapping symmetry between cache and DRAM is a structural problem in the memory hierarchy under the conventional interleaved memory mapping.  To break this symmetry needs an external force, and the permutation-based page interleaving effectively serves this purpose. The permutation-based interleaved memory has the following three properties. (1) Conflict addresses of the last level on-chip cache are distributed onto different DRAM banks. (2) All addresses in the same memory page are still in the same page as the conventional interleaved memory. (3) Memory pages are uniformly mapped among memory banks.  The cost of permutation to generate each memory bank index is trivial, which is not in the critical path in the deep memory hierarchy, and can be overlapped with operation at the cache level.
+<p>
+<b>The Usage of the Permutation-based Page Interleaving in Computers</b><br>
+The permutation-based solution in interleaved memory was first used by the Sun
+MicroSystems in the UltraSPARC IIIi processor in 2001 for its entry level servers, workstations, and desktop products. Today, the permutation-based page ininterleaving can be found in almost all the commercial microprocessors, such as AMD, Intel, and NVIDIA, for embedded systems, laptops, desktops, and enterprise servers.
+<p>
+</ul>
+<hr>
+<p>
+<ul>
+  <li> Zhao Zhang, Zhichun Zhu, and Xiaodong Zhang, <a
+ href="http://web.cse.ohio-state.edu/~zhang.574/hpcs/WWW/HTML/publications/abs00-7.html">
+``<b><font color=red>A
+permutation-based page interleaving scheme to reduce
+row-buffer conflicts and exploit data locality</font></b>",</a> <i>Proceedings of
+the 33rd Annual International Symposium
+on Microarchitecture</i>, (<b>Micro-33</b>), Monterey, California,
+December 10-13, 2000. pp. 32-41.
+    <p> </p>
+<ul>
+<li> The Wikipedia page of <a href="https://en.wikipedia.org/wiki/Interleaved_memory"> interleaved memory</a> </li>.
+<p>
+      <li> The permutation technique in this paper has been <a
+ href="http://web.cse.ohio-state.edu/~zhang.574/hpcs/WWW/HTML/News/sun-ultrasparc-news-2005.htm">
+adopted in the Sun
+UltraSPARC IIIi processor</a>. </li>
+      <li> <a
+ href="http://web.cse.ohio-state.edu/%7Ezhang/Sun-letter.pdf"> An
+acknowledgement letter</a> from the Sun MicroSystems Inc.. </li>
+  </li>
+      <li> The permutation technique has also been used in the Sun's
+first dual-core processor <a
+ href="https://www.cbronline.com/news/sun_pulls_the_plug_on_future_millennium_gemini_chips/">Gemini</a>,
+and is reported in this IEEE Micro <a
+ href="http://web.cse.ohio-state.edu/%7Ezhang/Gemini.pdf">paper</a>.
+      </li>
+<p>
+<li> The xor permutation for memory interleving is used in
+<a href=https://en.wikipedia.org/wiki/Geode_(processor)> AMD Geode LX processors</a>.
+(<a href=http://web.cse.ohio-state.edu/~zhang/Lx_databook.pdf>A copy of
+                the document)
+</li>
+<li>
+<a href=http://web.cse.ohio-state.edu/~zhang/XpressROM_BIOS_Guidev2_01-1[1].pdf>XpressROM</a> manufactured by
+<a href=http://www.insyde.com>Insyde</a> provides the xor permutation for
+memory interleaving for <a href=https://en.wikipedia.org/wiki/Geode_(processor)>AMD Geode processors</a>.
+</li>
+<li> The xor permutation for memory interleaving is used in
+<a href=http://www.axiomtek.com/Download/Download/SBC84621/SBC84621%20User's%20Manual.pdf>AMD Geode GX3 processor based single board computer (SBC)</a>
+manufactured by <a href=http://www.axiomtek.com>Axiomtek</a> in its
+SBC84621 Series.
+</li>
+<p>
+<li> The xor permutation for memory interleaving is used in
+<a href=http://www.farnell.com/datasheets/454238.pdf>Mobile Intel 945
+Express Chipset Family</a>.
+</li>
+<li> The xor permutation for memory interleaving is used in
+<a href=http://www.intel.com/content/www/us/en/processors/core/core-i7-processor.html>
+the 6th generation Intel Core i7 processors</a>. See
+<a href=http://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4th-gen-core-i7-lga2011-datasheet-vol-2.pdf> the Datasheet of Intel Core i7 processors</a>.
+</li>
+
+<p>
+<li> The xor permutation for memory interleaving is used in
+<a href=http://web.cse.ohio-state.edu/~zhang/m4n68tm_en[1].pdf>
+NVIDIA chipset (GeForce 7025/nForce 630a)</a>. This chipset is a part of the
+mothorboard (M2N68-AM SE2) manufactored by
+<a href=http://www.asus.com>ASUS</a>.
+</li>
+
+<p>
+<li>
+The permutation technique is introduced in book
+<a href="http://web.cse.ohio-state.edu/~zhang/MemorySystem.pdf">
+<i>Memory Systems: Cache,
+DRAM, Disk</i></a> by B. Jacob, S. Ng, and D. Wang.
+</li>
+<li>
+The permutation technique is introduced in book
+<a href="http://web.cse.ohio-state.edu/~zhang/Microprocessor-Architecture.pdf">
+<i>Microprocessor Architecture: from Simple Pipelines to Chip
+Multiprocessors</i></a> by J-L. Baer.
+</li>
+    </ul>
+    <p> </p>
+  </li>
+</ur>
+<p>
+<hr>
+<p>
