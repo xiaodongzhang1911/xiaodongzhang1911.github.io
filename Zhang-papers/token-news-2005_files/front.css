@@ -1,0 +1,57 @@
+BODY {
+	BACKGROUND-COLOR: white
+}
+H3 {
+	FONT: bold 18pt verdana, sans-serif; COLOR: #005a41
+}
+H4 {
+	FONT: bold 16pt verdana, sans-serif; COLOR: #005a41
+}
+P {
+	FONT: 10pt/1.5 verdana, sans-serif; COLOR: black
+}
+LI {
+	FONT: 10pt/1.5 verdana, sans-serif; COLOR: black
+}
+BLOCKQUOTE {
+	FONT: 10pt/1.5 verdana, sans-serif; COLOR: black
+}
+A:link {
+	FONT-WEIGHT: bold; COLOR: #ceb510; TEXT-DECORATION: none
+}
+A:visited {
+	FONT-WEIGHT: bold; COLOR: #ceb510; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-WEIGHT: bold; COLOR: #938108
+}
+A:hover {
+	FONT-WEIGHT: bold; COLOR: #938108
+}
+UL {
+	COLOR: #005a41; LIST-STYLE-TYPE: square
+}
+.navigation {
+	FONT-WEIGHT: bold; LINE-HEIGHT: 2.5; TEXT-ALIGN: right
+}
+.list-item {
+	FONT: 10pt/1.5 verdana, sans-serif
+}
+.list-head {
+	FONT: bold 18pt verdana, sans-serif; COLOR: #005a41
+}
+.details {
+	FONT: italic 10pt verdana, sans-serif; TEXT-ALIGN: center
+}
+.announce-title {
+	FONT: bold 18pt verdana, sans-serif; COLOR: #005a41
+}
+.hiring-header {
+	FONT-WEIGHT: bold; TEXT-ALIGN: center
+}
+TD.faculty {
+	FONT-SIZE: 10px; COLOR: #000000
+}
+TD.faculty_name {
+	FONT-SIZE: 12px; COLOR: #000000
+}
