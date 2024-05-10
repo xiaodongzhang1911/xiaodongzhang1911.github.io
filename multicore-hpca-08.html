@@ -1,0 +1,71 @@
+<title> Software cache partitioning in multicores</title>
+<body bgcolor="#ffffff">
+
+
+<center><h3> OS-based cache partitioning method for multicores
+is used in Linux kernel for
+production systems</h3> </center>
+<p>
+<ul>
+<b>Background</b><br>
+In a multicore system, three levels of caches are provided on-chip. Each core
+has its own priviate level 1 (L1) and level 2 (L2) caches. The level 3 (L3)
+cache, called Last level Cache (LLC), is shared among all the computing cores
+in the system. Each core has a freedom to access LLC in its own way. Thus, LLC
+may become conflicting place among cores for data accesses.
+For example, one core can occupy
+a large space in LLC by evicting cache blocks of another core. The issue is on
+how to control the data accesses to LLC from each core.
+<p>
+<b>An OS solution to partition LLC for each core</b><br>
+Since both physical memory accesses and cache accesses share the same memory
+address althouth their formats are different. For a given memory address
+from most significant bits to least significant bits, a physical memory
+page address is represented by page index bits +
+its page offset bits, while
+a cache block address is represented by
+tag bits + cache set index bits + cache block
+block offset bits. For each memory page allocation, OS also knows where this
+page is physically allocalted in the cache because the cache can be partitioned
+into multiple pages as if the cache block offset is set to a page size.
+Page coloring is a technique for OS to allocate memory pages by considering
+its cache locations. In this way, LLC can be partitioned statically and
+dynamically among cores by OS. The LLC cache conflict issue can be addressed
+by OS with page coloring. A group of
+methods are implemented in Linux OS and achieve high performance for multicore
+systems, and the results are published in HPCA'08.
+<p>
+
+<b>The Usage of the OS solution</b><br>
+The OS solution in HPCA'08 and its open source Linux code have been
+quickly adopted by Intel Software Solution Group (SSG) for their multicore
+products and applications.
+
+<hr>
+<p>
+<ul>
+<li> <a
+ href="http://web.cse.ohio-state.edu/~zhang.574/hpcs/WWW/HTML/publications/abs08-1.html">
+<b><font color=red>``Gaining insights into multicore cache partitioning:
+bridging the gap
+between simulation and real systems</font></b>"</a>,
+<i>Proceedings
+of the 14th International Symposium on High Performance Computer
+Architecture</i>
+(<b>HPCA'08</b>), Salt Lake City, Utah, February 16-20, 2008.
+    <p> </p>
+  </li>
+    <ul>
+      <li> <a href="https://web.cse.ohio-state.edu/past-news/news118.html">
+The methods and their implementations  presented in this paper
+have been adopted by Intel as a software
+solution to manage shared hardware caches in multi-core processors</a>.
+</li>
+<li> <a href="http://web.cse.ohio-state.edu/~zhang.574/OS-cache-software_intel_2010.pdf"> An acknowledgment letter from Intel Cooporation issued on June 16, 2010</a>.
+</li>
+      <li> <a href=http://engineering.osu.edu/news/2010/09/computer-scientists-advance-management-hardware-caches-multicore-processors>
+A report about this technical advancement</a>.
+</li>
+
+</ul>
+<p>
