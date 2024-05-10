@@ -1,0 +1,94 @@
+<title> Swap Token</title>
+<body bgcolor="#ffffff">
+
+
+<center><h3> Swap Token effectively minimizes system thrasing effects and
+is adopted in OS kernels</h3> </center>
+</h3></center>
+<p>
+<ul>
+<b>Background</b><br>
+In <a href=https://en.wikipedia.org/wiki/Virtual_memory>virtual memory</a> management, OS dynamically handles virtual memory allocation requests from mutiple running programs.
+In practice, the accumulated memory allocation space demand from applications is much larger than that of the available physical memory space. OS uses <a href=https://en.wikipedia.org/wiki/Demand_paging>Demand Paging</a>
+to swap-in and swap-out physical memory pages between DRAM memory and disks for each running program. The basic requirement for OS to ensure each running program to make execution progress is to maintain its
+<a href=https://en.wikipedia.org/wiki/Working_set>Working Set</a>, which is the minimum amount of physical memory space to be allocated for a running program.
+<a href=https://en.wikipedia.org/wiki/Thrashing_(computer_science)>Thrashing</a> happens when multiple running programs compete for inadequate amount of physical memory space, and none of them can obtain its working set.
+<p>
+
+<b> The Findings</b><br>
+A system thrashing is often a result of a sudden spike in memory requests during page demanding from a small number of running programs, which is difficult for OS to handle this situation.
+<p>
+
+<b>The Swap-Token Solution</b></br>
+Swap-token is a lightweight and dynamic thrashing protection mechanism for OS.
+The basic idea is to set a token in the system, which is randomly or targetly
+given to a process that has page faults when thrashing happens. The process
+that has the token is given a privilege to allocate more physical memory pages
+to build its working set, which is expected to quickly finish its execution and to release its physical memory space allocation to other processes.
+A time stamp is used to handover the token one by one.
+<p>
+
+<b>The Usage of the Swap-Token in OS</b><br>
+The first version of swap-token implemented in Linux applies the random
+approach. The second version is called preempt swap-token, where a priority counter is set for each process to track the number of swap-out pages.
+The token is always given to the process with a high priority, which has a high number of swap-out pages. The length of the time stamp is not a constant but is determined by the priority: the higher the number of swap-out pages of a process, the longer the time stamp for it will be.
+<hr>
+<p>
+<ul>
+  <li> <a
+ href="https://xiaodongzhang1911.github.io/Zhang-papers/TR-05-1.pdf">
+``<b><font color=red>Token-ordered
+LRU: an effective page replacement policy and its implementation in
+Linux systems</font></b>"</a>, <i>Performance Evaluation</i>, Vol. 60, Issue 1-4,
+2005, pp. 5-29.
+    <p> </p>
+    <ul>
+      <li>
+The token algorithm in this paper has been adopted in Linux Kernel version 2.6,
+called
+<a href="https://xiaodongzhang1911.github.io/Zhang-papers/token-news-2005.htm">
+"swap token"</a> </li>
+<li> <a href=http://linux-mm.org/SwapTokenTuning>A formal presentation</a> of
+"swap token" archieved in Linux Memory Management
+documentation.
+</li>
+      <li> The "swap token" <a href="http://fxr.watson.org/fxr/source/mm/thrash.c?v=linux-2.6">
+source code</a> in Linux kernels by Rik van Riel
+is archived in Cross-Referening Linux Library.
+</li>
+  <li> A <a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=7602bdf2fd14a40dd9b104e516fdc05e1bd17952">
+"preemtive swap token"</a> patch is available in Linux kernel 2.6.
+      </li>
+<p>
+<li>
+The token algorithm (swap token)
+is presented in a
+<a href="https://xiaodongzhang1911.github.io/Zhang-papers/understanding-linux.pdf">
+section</a>
+in the widely used
+Linux Kernel book <a href=https://doc.lagout.org/operating%20system%20/linux/Understanding%20Linux%20Kernel.pdf><i>Understanding the Linux Kernel</i> (3rd edition)</a>
+by D. P. Bovet and M. Casati. </li>
+<li> A detailed description of the token algorithm (swap token) in Linux
+is presented in a
+<a href="https://xiaodongzhang1911.github.io/Zhang-papers/professional-linux-1.pdf">
+section</a>
+in Book
+<a href=http://www.staroceans.org/kernel-and-driver/Wrox.Professional.Linux.Kernel.Architecture.Oct.2008.pdf>
+Professional Linux Kernel Architecture</a> by Wolfgan Mauerer.
+</li>
+
+<li> The token algorithm (swap token) is referred as an example in the section
+of
+<a href="https://xiaodongzhang1911.github.io/Zhang-papers/professional-linux-2.pdf">
+Linux and Academia</a>
+in Book
+<a href=http://www.staroceans.org/kernel-and-driver/Wrox.Professional.Linux.Kernel.Architecture.Oct.2008.pdf>
+Professional Linux Kernel Architecture</a> by Wolfgan Mauerer.
+</li>
+
+<li> The concept of <a href="http://www.linux-mm.org/SystemThrashing">
+``false LRU pages"</a> causing system thrashing
+is quoted in the Linux Memory Management Wiki. </li>
+    </ul>
+    <p> </p>
+  </li>
