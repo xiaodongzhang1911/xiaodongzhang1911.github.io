@@ -1,0 +1,153 @@
+<title> LIRS Caching Algorithm</title>
+<body bgcolor="#ffffff">
+
+
+<center><h3> The LIRS Caching Algorithm has been Widely Adopted in Computer
+and Data Processing Systems</h3> </center>
+<p>
+<ul>
+<b>Background</b><br>
+In any memory-capable digital systems, from small cell phones to a huge supercomputers and datacenters, the performance of data buffer management is mainly determined by a replacement algorithm that decides which data block will be evicted when a new data block needs to be allocated as the buffer space is full. The replacement concept is simple but its algorithmic optimization and system implementations are challenging and difficult.
+<p>
+The most commonly used algorithm is the LRU algorithm that makes a simple
+assumption for all the data accesses: if a data block is accessed once, it
+will be accessed again. This locality metric is also called ``recency'',
+which is implemented by a LRU stack. Each data access is recorded in the LRU
+stack, where the top entry is the most recent accessed (MRU) and the bottom
+entry is the least recent accessed (LRU). The LRU entry is the evicted item
+as the buffer is full (reflected by the full LRU stack). If data access
+pattern
+follows the simple assumption of LRU, the strong locality data set is well kept
+in the buffer by LRU. However, the LRU algorithm fails to handle the
+following three data access patterns: (1) each data block is only accessed once
+in a format of sequential scans. In this situation, the buffer would be
+massively
+polluted by weak or no locality data blocks. (2) For a cyclic (loop-like)
+data access pattern, where the loop length is slightly larger than the
+buffer size, LRU always mistakenly evicts the blocks that will be accessed
+soon in the next loop. (3) In multiple streams of data accesses where
+each stream has its own probability for data re-accesses,
+LRU could not distinguish the probabilities among the streams.
+<p>
+Although the LRU algorithm has these three critical flaws, it has been widely
+used in production systems due to its merits of low complexity and
+low overhead implementation. Since the LRU replacement algorithm was
+proposed and its approximation was implemented in 1960`s, computer scientists
+and system engineers have made continuous and tireless efforts to improve
+replacement algorithms analytically and systematically for a common goal
+of addressing the flaws of LRU, subject to keeping the merits of LRU
+(working well for strong locality data accesses and low overhead
+implementation).
+<p>
+<b>The LIRS Caching Solution</b><br>
+LIRS represents Low Inter-reference Recency Set that is the data set to be
+kept in the buffer cache. Inter-reference recency is equivalent to
+reuse-distance for a accessing a data block, which measures
+the number of distinct data entry accesses between two consecutive accesses
+of the data block. The data replacement decision of the LIRS algorithm
+is made based on the reuse distance, namely to evict the high reuse distance
+data blocks and keep the low reuse distance data blocks. In this way,
+the three LRU issues are addressed. The LIRS caching algorithm is
+implemented by a data structure of two stacks, retaining the
+same complexity as that of LRU.
+<p>
+<b>The Usage of the LIRS Caching Algorithm in Software Systems</b><br>
+After many years` efforts from software industries since the LIRS paper was
+published in 2002, the dominant LRU-like algorithms have been gradually
+replaced by LIRS-like algorithms in major operating systems, database systems,
+and data centers, including BSD, Linux, MySQL, Infinispan, and other production systems.
+<p>
+<hr>
+<p>
+<ul>
+<li> Song Jiang and Xiaodong Zhang, <a href=https://xiaodongzhang1911.github.io/Zhang-papers/TR-02-6.pdf>
+``<b><font color=red>LIRS: an efficient low inter-reference recency set replacement to improve
+buffer cache performance</font></b>",</a>
+<i>Proceedings of the 2002 ACM SIGMETRICS Conference on Measurement and
+Modeling of Computer Systems</i> (<b>SIGMETRICS'02</b>),
+Marina Del Rey, California, June 15-19, 2002.<br>
+The <a href=https://xiaodongzhang1911.github.io/Zhang-papers/TR-05-11.pdf>
+extended version</a> has been published in <i>IEEE Transactions on
+Computers</i>, Vol. 54, No. 8, 2005.
+<p></p>
+<ul>
+<li>
+<a href=http://en.wikipedia.org/wiki/LIRS_caching_algorithm>
+The LIRS Wikipedia page</a>.
+</li>
+<li> The LIRS algorithm has been
+<a href=https://web.cse.ohio-state.edu/past-news/news99.html>
+adopted in MySQL</a>, the world's most
+widely used database system.
+</li>
+<li> The LIRS source code is archived in page management section of
+<a href=http://www.iskm.org/mysql56/pgman_8hpp_source.html>
+MySQL Server 5.6</a>.
+</li>
+<li> <a href=http://engineering.osu.edu/news/2009/05/professors-work-plays-role-faster-google-facebook>A widely adopted algorithm for
+many data processing applications</a>.
+</li>
+<li> <a href=http://web.cse.ohio-state.edu/~zhang/riel2003_o1_vm.pdf>Towards an
+O(1) VM</a>.
+</li>
+<p>
+<li> The LIRS caching algorithm has been adopted in
+<a href="http://www.jboss.org/infinispan"> Infinispan</a> data grid platform.
+</li>
+<li> <a href="https://docs.jboss.org/author/display/ISPN/Eviction.html">A JBoss Community
+article about LIRS in Infinispan</a>.
+</li>
+<li> LIRS with free lock contention in Infinispan is provided by
+<a href="http://web.cse.ohio-state.edu/~zhang.574/hpcs/WWW/HTML/publications/abs09-1.html">
+<font color=red>BP-Wrapper</font></a> (<b>ICDE'09</b>).
+</li>
+<li><a href="http://www.slideshare.net/galderz/pse-jud-con">
+Keeping Infinispan in shape: highly-precise, scalable data eviction</a>,
+a presentation of LIRS and BP-Wrapper based caching for Infinispan from
+Red Hat.
+</li>
+<p>
+<li> The LIRS algorithm has been merged in
+<a href=http://www.gridgain.com>
+GridGain</a>, an in-memory
+data processing system. (<a href=https://www.gridgain.com/media/in-memory-database-readme.pdf>Technical Brief of the In-Memory Data Grid</a>).
+</li>
+<p>
+<li> The LIRS algorithm is used in
+<a href=https://impala.apache.org/overview.html>
+Apache Impala</a>, a low latency and high concurrency data processing
+system on Hadoop. (<a href=https://docs.cloudera.com/runtime/7.1.0/release-notes/rt-release-notes.pdf>Cloudera Software Release for Apache Impala</a>).
+</li>
+<p>
+<li> The LIRS algorithm has been adopted by
+<a href=http://jackrabbit.apache.org/>
+Apache Jackrabbit</a>, a hierarchical content repository.
+(<a href="http://jackrabbit.apache.org/oak/docs/apidocs/org/apache/jackrabbit/oak/cache/CacheLIRS.html">Jackrabbit Oak LIRS Cache</a>).
+</li>
+<p>
+<li> The LIRS algorithm has been adopted by
+<a href=http://www.h2database.com/html/main.html>
+H2 Database Engine</a>, a Java SQL database.
+(<a href=https://github.com/h2database/h2database/blob/master/h2/src/tools/org/h2/dev/cache/CacheLIRS.java>A Scan Resistant Cache</a>).
+</li>
+<p>
+<li> The LIRS algorithm has been adopted by
+<a href=http://www.redhat.com/en/technologies/jboss-middleware/data-grid>
+Red Hat JBoss Data Grid</a>, an in-memory data processing system.
+(<a href=https://access.redhat.com/documentation/en-US/Red_Hat_JBoss_Data_Grid/6.3/pdf/Administration_and_Configuration_Guide/Red_Hat_JBoss_Data_Grid-6.3-Administration_and_Configuration_Guide-en-US.pdf>Administration and Configuration Guide </a>).
+</li>
+<p>
+<li> The LIRS algorithm has been adopted by
+<a href=https://developers.redhat.com/products/datavirt/overview>
+Red Hat Data Virtualization System</a>, a data integration solution to manage
+multiple data sources.
+(<a href=https://access.redhat.com/documentation/en-us/red_hat_jboss_data_virtualization/6.2/html/development_guide_volume_2_governance/sect-federation>
+An in-memory LIRS cache of distributed nodes is used in the hierarchical
+database </a>).
+</li>
+<p>
+
+</ul>
+<p>
+<hr>
+                                                               
