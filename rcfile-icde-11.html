@@ -1,0 +1,178 @@
+<title> RCFile Data Placement Structure</title>
+<body bgcolor="#ffffff">
+
+
+<center><h3>RCFile has become a standard data format for both conventional
+databases and for big data warehouse
+systems</h3> </center>
+<hr>
+<p>
+<ul>
+<b>Background</b><br>
+The basic data structure of a relational database consists of a
+two-dimensional table organized in rows and collumns. There are two
+basic data formats to store the tables in computer systems: <i>row-store</i>
+and <i>column-store</i>. Row-store forms a table in a sequence of rows
+(or records) with two advantages: (1) It is easy to add or
+update rows or records, which are basic operations to modify,
+grow or shrink the
+table; and (2) all the columns in a row or a record are stored together,
+which is desirable for applications to access a complete record. A
+major disadvantage of the row-store format is related to I/O efficiency. Since
+all the columns of a row have to be read although only a few columns may be
+used in practice, particularly for a very wide table. Another disadvantage
+is that a row-based data compression may not be as efficient as that on
+a column-based one.
+<p>
+The two disadvantages can be addressed by the column-store format that forms
+a table in a sequence of columns with two advantages: (1) Only required
+columns are read from the storage during the selection process of a query;
+and (2) a high compression rate
+can be achieved due to similar data types in a column.
+Two disadvantages are associated with the column-store format. First, if the
+result of a query needs operations among multiple
+columns that may be stored in
+different tracks in a disk, or even worse in different nodes connected by
+networks, significant delays may come from random accesses in disks or/and
+remote accesses via networks. Second, it is not easy for write intensive
+workloads where rows or records are frequently added/deleted and updated.
+<p>
+As data volume becomes increasinly large, the tables have to be partitioned
+and placed
+among many computing nodes in clusters. Thus, a pure row-store or column-store
+would not be efficient for processing tables in a distributed way
+in large clusters.
+<p>
+
+<b> The RCFile Data Format</b><br>
+The RCFile (Row Columnar File) data format is designed and implemented for
+data processing in distributed systems. RCfile is a hybrid data format that
+forms a table in a sequence row groups. A row group consists of multiple
+rows. Furtherfore, each row group is partitioned into columns.
+In this way, the RCFile format has the merits of both row-store and
+column-store, which is particularly desirable for big data processing
+in clusters.
+<p>
+
+<b>The Usage of RCFile in Various Data Processing Systems</b><br>
+RCFile has been used in several major big data systems, including HBase, Hive,
+HCatelog, Impala, Pig, Presto, and others. Conventional databases have also
+been enabled to access data in the RCFile format,
+including IBM database, Microsoft SQL Server,
+Oracle database, SAS in-database products, Teradata and others.
+<p>
+
+<hr>
+<p>
+
+<ul>
+<li> <a href="https://xiaodongzhang1911.github.io/Zhang-papers/TR-11-4.pdf">
+``<b><font color=red>RCFile: a fast and space-efficient data placement structure in
+MapReduce-based warehouse systems</font></b>"</a>,
+<i>Proceedings of International Conference on Data Engineering</i>
+(<b>ICDE'11</b>),
+Hannova, Germany, April 11-16, 2011.
+    <p> </p>
+ <ul>
+<li> A general method of table placement under a basic structure
+associated with a set of variations
+is discussed in this VLDB 2013
+<a href=https://xiaodongzhang1911.github.io/Zhang-papers/TR-13-5.pdf>
+paper</a>, where
+<a href=https://www.hadoopinrealworld.com/rcfile-vs-orc/>
+Optimized RCFile (ORC)</a> is presented as a case study. ORC has also been
+merged into production systems, such as Hive.
+</li>
+<p>
+<li> <a href="http://en.wikipedia.org/wiki/RCFile">
+RCFile Wikipedia</a>.
+</li>
+<p>
+<li> <a href=https://cwiki.apache.org/confluence/display/Hive/HCatalog+UsingHCat>
+The Hadoop table and storage management layer HCatalog supports the RCFile
+data format</a>.
+</li>
+<p>
+<li><a href=https://xiaodongzhang1911.github.io/Zhang-papers/Hive-ICDE10.pdf>
+RCFile is adopted in Hive, a big data warehouse on top of Hadoop</a>.
+<li>The role and its implementation of RCFile and Optimized RCFile
+in Apache Hive are presented
+in
+<a href=https://xiaodongzhang1911.github.io/Zhang-papers/TR-14-2.pdf>
+this SIGMOD'14 paper</a>.
+<p>
+</li>
+<li><a href=https://engineering.fb.com/2014/04/10/core-data/scaling-the-facebook-data-warehouse-to-300-pb/>
+RCFile is a default option in Facebook's Petabyte-scale data warehouse</a>.
+</li>
+<p>
+<li><a href=https://prestodb.io/overview.html>
+RCFile data format is supported in Facebook's Presto distributed system</a>.
+</li>
+<p>
+<li>
+RCFile is a data storage format in
+<a href=http://www.cloudera.com/content/cloudera/en/home.html>
+Cloudera</a>'s
+<a href=http://blog.cloudera.com/blog/2012/10/cloudera-impala-real-time-queries-in-apache-hadoop-for-real/>Impala</a>, a real-time query processing system
+in Hadoop.
+<a href=https://docs.cloudera.com/documentation/enterprise/5-8-x/topics/impala_rcfile.html>
+Here is a set of detailed instructions</a>.
+</li>
+<p>
+<li>
+RCFile is a data storage format in
+<a href=https://www.qubole.com/?utm_source=google&utm_medium=cpc&utm_content=Brand_-_Exact&utm_source=google&utm_medium=cpc&utm_adgroupid=112545032582&utm_term=qubole&utm_content=&utm_campaign=&utm_channel=&gclid=Cj0KCQiAvP6ABhCjARIsAH37rbSdJQSTGG4MSPyv0ltidR5Qu5nBcW_f813L5reBGhvtpiFWPPWXv4oaAof4EALw_wcB>
+Qubole</a>, an open data lake platform, called
+<a href=https://docs.qubole.com/en/latest/user-guide/engines/hive/hive-table-formats/rcfile.html>
+RCFile Tables</a>, or <a href=https://docs.qubole.com/en/latest/user-guide/engines/hive/hive-table-formats/orc.html>ORC Tables</a>.
+</li>
+<p>
+<li>
+ORC is used in
+<a href=https://aws.amazon.com/athena/?whats-new-cards.sort-by=item.additionalFields.postDateTime&whats-new-cards.sort-order=desc>
+Amazon Athena</a>, an interactive query service using SQL:
+<a href=https://docs.aws.amazon.com/athena/latest/ug/convert-to-columnar.html>
+ORC format in Amazon S3</a> (S3=Simple Storage Service).
+</li>
+<p>
+<li><a href=https://docs.oracle.com/en/database/oracle/oracle-database/19/sutil/oracle_hdfs-oracle_hive-access-drivers.html#GUID-597D7F45-D37F-49CE-A7E5-C92C7D707AE9>
+RCFile in Oracle HDFS and Hive Access Drivers</a>.
+</li>
+<p>
+<li><a href=https://docs.oracle.com/bigdata/bds32/BDSUG/bigsqlref.htm#BIGUG76682>
+RCFile in Oracle Big Data SQL</a>.
+</li>
+<p>
+<li><a href=https://www.imwuc.org/HigherLogic/System/DownloadDocumentFile.ashx?DocumentFileKey=25b688b4-3d91-6d3a-7810-d1c4377dba00>
+RCFile in IBM InfoSphere Biginsights</a>.
+</li>
+<p>
+<li><a href=https://msdn.microsoft.com/en-us/library/dn935026.aspx>
+RCFile in Microsoft SQL Data Warehouse and SQL Server</a>.
+</li>
+<p>
+<li><a href=https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.6.2/bk_teradata-connector-user-guide/content/ch_HortonworksConnectorForTeradata.html>
+The Hortonworks Connector bridges Teradata database with RCFile format data</a>.
+</li>
+<p>
+<li><a href=http://support.sas.com/documentation/cdl/en/indbug/68170/PDF/default/indbug.pdf>
+RCFile in SAS In-Database Products</a>.
+</li>
+<p>
+<li><a href=http://archive2.cra.org/ccc-old/rh-bigdata.php>
+A research highlight of RCFile by the Computing Community Consorttium
+(CCC)</a>.
+</li>
+<p>
+<li><a href=https://xiaodongzhang1911.github.io/Zhang-papers/Facebook-RCFile.pdf>
+An overview of RCFile posted in China Software Development Network
+(CSDN)</a>.
+</li>
+
+<p>
+</ul>
+</ul>
+<hr>
+<p>
+              
